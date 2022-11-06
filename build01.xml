@@ -1,0 +1,44 @@
+<project name="Sample project" default="main" basedir=".">
+	<description></description>
+	
+	<property name="source.dir" location="src" />
+	<property name="build.dir" location="bin" />
+	<property name="doc.dir" location="doc" />
+	<property name="lib.dir" location="lib" />
+	
+	<path id="junit.class.path">
+		<pathelement location="/home/jefferson/Downloads/sts-4.15.3.RELEASE/plugins/org.junit_4.13.2.v20211018-1956.jar"/>
+		<pathelement location="/home/jefferson/Downloads/sts-4.15.3.RELEASE/plugins/org.hamcrest.core_1.3.0.v20180420-1519.jar"/>
+		<pathelement location="${build.dir}"/>
+	</path>
+	
+	<target name="init" description="">
+		<mkdir dir="${build.dir}" />
+		<mkdir dir="${doc.dir}" />
+		<mkdir dir="${lib.dir}" />
+	</target>
+	
+	<target name="compile" description="">
+		<javac srcdir="${source.dir}" destdir="${build.dir}" includeantruntime="false">
+			<classpath refid="junit.class.path" />
+		</javac>
+	</target>
+	
+	<target name="doc" description="">
+		<javadoc sourcepath="${source.dir}" destdir="${doc.dir}">
+			<classpath refid="junit.class.path" />
+		</javadoc>
+	</target>
+	
+	<target name="clean" description="">
+		<delete dir="${build.dir}" />
+		<delete dir="${doc.dir}" />
+		<delete>
+			<fileset defaultexcludes="no" dir="${source.dir}" includes="**/*~" />
+		</delete>
+	</target>
+	
+	<target name="main" depends="clean, init, compile, doc">
+		<description>Main target</description>
+	</target>
+</project>
